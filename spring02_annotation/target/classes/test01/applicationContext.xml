@@ -7,9 +7,9 @@
 	
 	<context:component-scan base-package="test01"/>
 	<bean id="wheelBean" class="test01.Wheel">
-		<property name="radius" value="20"/>	
+		<property name="radius" value="100"/>	
 	</bean>
-	<bean id="wheelBean2" class="test01.Wheel">
-		<property name="radius" value="30"/>	
-	</bean>
+	<context:component-scan base-package="test01"/>
+	
+	
 </beans>

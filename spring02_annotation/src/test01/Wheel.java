@@ -2,7 +2,7 @@ package test01;
 
 import org.springframework.stereotype.Component;
 
-
+@Component
 public class Wheel {
 	
 	private int radius = 5;

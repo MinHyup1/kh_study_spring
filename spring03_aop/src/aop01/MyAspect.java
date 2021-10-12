@@ -1,0 +1,29 @@
+package aop01;
+
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.stereotype.Component;
+
+
+@Component
+public class MyAspect implements MethodInterceptor {
+	
+	//자바 Reflection : 객체 또는 클래스명을 통해 타입에 대한 정보를 조사할 수 있는 기법
+
+
+	@Override
+	public Object invoke(MethodInvocation invocation) throws Throwable {
+		System.out.println("출근 카드를 찍는다.");
+		
+		try {
+			invocation.proceed();
+		}catch (Exception e) {
+			System.out.println("쉬는 날이었다.");
+		}finally {
+			System.out.println("집에 간다.");
+		}
+		
+		return null;
+	}
+
+}
