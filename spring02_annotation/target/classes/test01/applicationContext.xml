@@ -9,7 +9,6 @@
 	<bean id="wheelBean" class="test01.Wheel">
 		<property name="radius" value="100"/>	
 	</bean>
-	<context:component-scan base-package="test01"/>
 	
 	
 </beans>

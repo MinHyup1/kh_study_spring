@@ -32,17 +32,5 @@ public class MyAspect  {
 		System.out.println("쉬는 날이었다.");
 	}
 
-	public Object invoke(MethodInvocation invocation) throws Throwable {
-		
-		
-		try {
-			invocation.proceed();
-		}catch (Exception e) {
-			
-		}finally {
-		}
-		
-		return null;
-	}
-
+	
 }

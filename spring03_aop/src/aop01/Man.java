@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 public class Man  {
 
 	public void develop() {
-		
 			System.out.println("파이썬으로 개발한다.");
 	}
 	

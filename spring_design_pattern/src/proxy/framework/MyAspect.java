@@ -29,11 +29,10 @@ public class MyAspect implements Developer {
 		System.out.println("출근 카드를 찍는다.");
 		try {
 			/*
-			 * System.out.println(developer.getClass()); Method play =
-			 * developer.getClass().getDeclaredMethod("play"); play.setAccessible(true);
+			 * System.out.println(developer.getClass()); 
+			 * Method play = developer.getClass().getDeclaredMethod("play"); 
+			 * play.setAccessible(true);
 			 * play.invoke(developer);
-			 * 
-			 * developer.develop();
 			 */
 			developer.develop();
 		}catch (Exception e) {
