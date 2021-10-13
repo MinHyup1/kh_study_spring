@@ -1,6 +1,5 @@
 package aop03;
 
-import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -22,8 +21,9 @@ public class MyAspect  {
 	public void after() {
 		System.out.println("집에 간다.");
 	}
-	@AfterReturning(value = "execution(* *(..))")
-	public void afterReturning() {
+	@AfterReturning(value = "execution(* *(..))" , returning = "res")
+	public void afterReturning(Object res) {
+		System.out.println(res);
 		System.out.println("퇴근 카드를 찍는다.");
 	}
 	@AfterThrowing(value = "execution(* *(..))" , throwing = "exception") //예외객체를 받을 메서드 매개변수명
