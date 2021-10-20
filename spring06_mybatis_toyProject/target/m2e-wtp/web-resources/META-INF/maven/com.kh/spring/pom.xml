@@ -40,6 +40,12 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>5.3.10</version>
+		</dependency>
+		
 		
 				
 		<!-- AspectJ -->
@@ -126,6 +132,21 @@
 		    <artifactId>spring-orm</artifactId>
 		    <version>5.3.10</version>
 		</dependency>
+		
+		
+		<!-- json parse -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.12.3</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.12.3</version>
+		</dependency>
+		
+		
 			
 		
 

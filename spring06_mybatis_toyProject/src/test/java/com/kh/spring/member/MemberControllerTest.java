@@ -1,21 +1,29 @@
 package com.kh.spring.member;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+import javax.servlet.http.Cookie;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.results.PrintableResult;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.spring.member.model.dto.Member;
 
 
 @WebAppConfiguration
@@ -23,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/*-context.xml"})
 public class MemberControllerTest {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	//MockMvc : http 요청 및 응답 상황 테스트를 위한 객체
 	
 	@Autowired
@@ -46,5 +56,56 @@ public class MemberControllerTest {
 		
 	}
 	
+	@Test
+	public void joinWithJson() throws Exception {
+		
+		Member member = new Member();
+		member.setUserId("testJson");
+		member.setPassword("1234");
+		member.setEmail("json@pclass.com");
+		member.setTell("010-0000-2222");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String memberJson = mapper.writeValueAsString(member);
+		logger.debug(memberJson);
+		//logger.debug(mapper.readValue(memberJson, Member.class).toString());
+		
+		mockMvc.perform(post("/member/join-json")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(memberJson))
+		.andExpect(status().isOk())
+		.andDo(print());
+	}
+	
+	@Test
+	public void loginlmpl() throws Exception{
+		mockMvc.perform(post("/member/login")
+				.param("userId", "pclass")
+				.param("password", "1234"))
+		.andExpect(status().is3xxRedirection())
+		.andDo(print());
+	}
+	
+	@Test
+	public void mypage() throws Exception {
+		Member member = new Member();
+		member.setUserId("testJson");
+		member.setPassword("1234");
+		member.setEmail("json@pclass.com");
+		member.setTell("010-0000-2222");
+		
+		mockMvc.perform(get("/member/mypage")
+				.cookie(new Cookie("JSESSIONID", "23165165153"))
+				.sessionAttr("authentication", member))
+		.andExpect(status().isOk())
+		.andDo(print());
+	}
+	
+	@Test
+	public void idCheck() throws Exception {
+		mockMvc.perform(get("/member/id-check?userId=pclass"))
+		.andExpect(status().isOk())
+		.andDo(print());
+	}
 	
 }

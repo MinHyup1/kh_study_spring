@@ -5,7 +5,7 @@
   
   <configuration>
   	<settings>
-  		<setting name="mapUnderscoreToCamelCase" value="true"/>
+  		<setting name="mapUnderscoreToCamelCase" value="true"/> <!--카멜케이스로 바꿔줌-->
   	</settings>
   
   	<typeAliases>
