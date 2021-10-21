@@ -9,7 +9,7 @@ public class IndexController {
 	//1. @Controller : 해당 클래스를 applicationContext에 bean으로 등록
 	//				   Controller와 관련된 annotation을 사용할 수 있게 해준다.
 	
-	//2. @RequesrMapping : 요청 URL과 Controller의 메서드 매핑을 지원
+	//2. @RequestMapping : 요청 URL과 Controller의 메서드 매핑을 지원
 	//					  클래스 위에 선언할 경우, 해당 클래스의 모든 메서드가 지정된 경로를 상위경로로 가진다.
 	
 	//3. @GetMapping : Get 방식의 요청 URL과 Controller의 메서드 매핑을 지원

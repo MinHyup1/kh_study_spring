@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import javax.servlet.http.Cookie;
 
 import org.junit.Before;
@@ -15,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -38,6 +38,10 @@ public class MemberControllerTest {
 	@Autowired
 	WebApplicationContext wac;
 	MockMvc mockMvc;
+	
+	
+	
+	
 	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
@@ -60,7 +64,7 @@ public class MemberControllerTest {
 	public void joinWithJson() throws Exception {
 		
 		Member member = new Member();
-		member.setUserId("testJson");
+		member.setUserId("hihi");
 		member.setPassword("1234");
 		member.setEmail("json@pclass.com");
 		member.setTell("010-0000-2222");
@@ -69,7 +73,6 @@ public class MemberControllerTest {
 		String memberJson = mapper.writeValueAsString(member);
 		logger.debug(memberJson);
 		//logger.debug(mapper.readValue(memberJson, Member.class).toString());
-		
 		mockMvc.perform(post("/member/join-json")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(memberJson))
@@ -107,5 +110,7 @@ public class MemberControllerTest {
 		.andExpect(status().isOk())
 		.andDo(print());
 	}
+	
+	
 	
 }
