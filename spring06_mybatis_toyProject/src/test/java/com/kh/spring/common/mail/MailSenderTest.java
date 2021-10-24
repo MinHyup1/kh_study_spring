@@ -1,6 +1,7 @@
 package com.kh.spring.common.mail;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.mail.Message;
 import javax.mail.internet.MimeMessage;
@@ -10,18 +11,21 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.kh.spring.member.model.dto.Member;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,9 +36,10 @@ public class MailSenderTest {
 	
 	@Autowired
 	JavaMailSenderImpl mailSender;
-	
 	@Autowired
 	RestTemplate http;
+	@Autowired
+	ObjectMapper mapper;
 	
 	@Test
 	public void sendEmail() throws Exception {
@@ -50,18 +55,41 @@ public class MailSenderTest {
 	}
 	
 	@Test
-	public void restTemplateTest() {
-		String naver = http.getForObject("https://www.naver.com", String.class);
+	public void restTemplateTest() throws JsonMappingException, JsonProcessingException, RestClientException {
 		
-		MultiValueMap<String,String> body = new LinkedMultiValueMap<String, String>();
-		body.add("userId", "pclass");
-		body.add("password","1234");
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body,headers);
+		RequestEntity<Void> request = RequestEntity.
+				get("https://dapi.kakao.com/v3/search/book?query=java")
+				.header("Authorization", "KakaoAK 60bb7ddb3bc22ac0349d35f433bbad14")
+				.build();
 		
-		String login = http.postForObject("http://localhost:8989/member/login", entity, String.class);
-		//logger.debug(naver);
+		JsonNode root = mapper.readTree(http.exchange(request, String.class).getBody());
+		
+		for (JsonNode jsonNode : root.findValues("url")) {
+			logger.debug(jsonNode.asText());
+		}
+		
+	}
+	
+	@Test
+	public void restTemplatePostTest() throws Exception {
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+		body.add("source", "en");
+		body.add("target", "ko");
+		body.add("text", "Method for overriding default locale to use for formatting.");
+		
+		
+		
+		RequestEntity<MultiValueMap<String, String>> request =
+				RequestEntity.post("https://openapi.naver.com/v1/papago/n2mt")
+							 .header("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+							 .header("X-Naver-Client-Id", "6m4Zrp8ob9HfWYOR5AQZ")
+							 .header("X-Naver-Client-Secret", "eJIc6YeD7n")
+							 .body(body);
+				
+		
+		JsonNode root = mapper.readTree(http.exchange(request, String.class).getBody());
+		logger.debug(root.findValue("translatedText").asText());
+		
 	}
 
 }
