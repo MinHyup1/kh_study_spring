@@ -30,7 +30,7 @@ import com.kh.spring.common.code.ErrorCode;
 import com.kh.spring.common.exception.HandlableException;
 import com.kh.spring.common.validator.ValidateResult;
 import com.kh.spring.member.model.dto.Member;
-import com.kh.spring.member.model.service.MemberService;
+import com.kh.spring.member.model.service.MemberServiceImpl;
 import com.kh.spring.member.validator.JoinForm;
 import com.kh.spring.member.validator.JoinFormValidator;
 //1. @Controller : 해당 클래스를 applicationContext에 bean으로 등록
@@ -63,12 +63,12 @@ public class MemberController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
-	private MemberService memberService;
+	private MemberServiceImpl memberService;
 	private JoinFormValidator joinFormValidator;
 
 	
 	
-	public MemberController(MemberService memberService, JoinFormValidator joinFormValidator) {
+	public MemberController(MemberServiceImpl memberService, JoinFormValidator joinFormValidator) {
 		super();
 		this.memberService = memberService;
 		this.joinFormValidator = joinFormValidator;
@@ -167,11 +167,11 @@ public class MemberController {
 		
 		session.setAttribute("authentication", certifiedUser);
 		
-		return "redirect:/member/mypage"; //redirect 붙이면 redirect됨
+		return "redirect:/member/mypage";
 	}
 	
 	@GetMapping("mypage")
-	public void mypage(@CookieValue(name="JSESSIONID", required = false) String sessionId ,
+	public String mypage(@CookieValue(name="JSESSIONID", required = false) String sessionId ,
 					   @SessionAttribute(name="authentication", required = false) Member member,
 					   HttpServletResponse response) {
 		
@@ -182,6 +182,8 @@ public class MemberController {
 		
 		logger.debug("@CookieValue  : " + sessionId );
 		logger.debug("@SessionAttribute  : " + member );
+		
+		return "member/mypage";
 	}
 	
 	@GetMapping("id-check")

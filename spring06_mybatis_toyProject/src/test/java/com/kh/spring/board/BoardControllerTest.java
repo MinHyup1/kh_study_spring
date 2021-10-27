@@ -56,7 +56,7 @@ Logger logger = LoggerFactory.getLogger(this.getClass());
 				.file(file1)
 				.file(file2)
 				.contentType(MediaType.MULTIPART_FORM_DATA)
-				.param("title", "게시글테스트")
+				.param("title", "트랜잭션 테스트")
 				.param("content", "본문")
 				.sessionAttr("authentication",member))
 				.andExpect(status().is3xxRedirection())
