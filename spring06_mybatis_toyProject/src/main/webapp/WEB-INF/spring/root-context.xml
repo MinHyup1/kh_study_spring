@@ -10,9 +10,9 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" >
-		<property name="user" value="bm"></property>
-		<property name="password" value="1234"></property>
-		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="user" value="admin"></property>
+		<property name="password" value="Qwer1234qwer"></property>
+		<property name="URL"  value="jdbc:oracle:thin:@pclass_high?TNS_ADMIN=C:/CODE/e_servlet/Wallet_PCLASS"></property>
 	</bean>
 	
 
@@ -20,7 +20,6 @@
 	  <property name="dataSource" ref="dataSource" />
 	  <property name="configLocation" value="classpath:mybatis/config.xml"/>
 	</bean>
-	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
