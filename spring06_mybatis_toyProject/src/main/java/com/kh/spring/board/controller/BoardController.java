@@ -36,7 +36,7 @@ public class BoardController {
          @RequestParam List<MultipartFile> files,
          @SessionAttribute("authentication") Member member
          ) {
-	  
+	    
 	   logger.debug("filesSize : " + files.size());
 	   logger.debug("files.() : " + files.get(0));
 	   logger.debug("mf.isEmpty : " + files.get(0).isEmpty());
