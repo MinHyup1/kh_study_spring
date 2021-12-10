@@ -6,8 +6,9 @@ public enum Config {
 	COMPANY_EMAIL("p01073027511@gmail.com"),
 	STMP_AUTHENTICATION_ID("p01073027511@gmail.com"),
 	STMP_AUTHENTICATION_PASSWORD("k75117511"),
-	//UPLOAD_PATH("C:\\CODE\\upload\\")
-	UPLOAD_PATH("C:\\CODE\\upload\\");
+	UPLOAD_PATH("/usr/local/toy/upload/");
+	//UPLOAD_PATH("C:\\CODE\\upload\\");
+	
 	
 	public final String DESC;
 	

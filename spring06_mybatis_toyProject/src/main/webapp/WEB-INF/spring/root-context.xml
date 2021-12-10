@@ -12,7 +12,8 @@
 	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" >
 		<property name="user" value="admin"></property>
 		<property name="password" value="Qwer1234qwer"></property>
-		<property name="URL"  value="jdbc:oracle:thin:@pclass_high?TNS_ADMIN=C:/CODE/e_servlet/Wallet_PCLASS"></property>
+		<!-- <property name="URL"  value="jdbc:oracle:thin:@pclass_high?TNS_ADMIN=C:/CODE/e_servlet/Wallet_PCLASS"></property> -->
+		<property name="URL"  value="jdbc:oracle:thin:@pclass_high?TNS_ADMIN=/usr/local/tomcat/webapps/ROOT/Wallet_PCLASS"></property>
 	</bean>
 	
 

@@ -9,5 +9,6 @@
   		select password from member where user_id = #{userId}
   	</select>
   	
+
   
   </mapper>
