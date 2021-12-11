@@ -21,7 +21,7 @@ public class AdminMemberController {
 
 	@Autowired
 	private AdminMemberService adminMemberService;
-	
+	 
 	@GetMapping("member/member-list")
 	public void searchAllMembers(Model model) {
 		List<Member> members = adminMemberService.selectAllMembers();
